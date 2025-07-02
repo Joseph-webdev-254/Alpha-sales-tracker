@@ -1,0 +1,29 @@
+/* components/SuccessCard.css */
+.success-card {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+  background: #e0ffe0;
+  border: 2px solid #4caf50;
+  color: #2e7d32;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: -10;
+  opacity: 0;
+  transition: all 0.4s ease;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.success-card.show {
+  z-index: 999;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.success-card .tick {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}

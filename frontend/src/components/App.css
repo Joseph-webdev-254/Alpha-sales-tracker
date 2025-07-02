@@ -1,0 +1,62 @@
+/* Admin Form Styling for Project Alpha */
+
+section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1rem;
+  min-height: 100vh;
+  background-color: #f5f6fa;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+form {
+  background-color: #ffffff;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  max-width: 400px;
+  width: 100%;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.inputs h1 {
+  text-align: center;
+  font-size: 1.6rem;
+  color: #2f3640;
+  margin-bottom: 1rem;
+}
+
+.inputs input {
+  padding: 0.75rem 1rem;
+  border: 1px solid #dcdde1;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.inputs input:focus {
+  border-color: #4cd137;
+}
+
+.inputs button {
+  background-color: #4cd137;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.inputs button:hover {
+  background-color: #44bd32;
+}

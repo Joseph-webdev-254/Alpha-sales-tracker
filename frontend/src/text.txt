@@ -1,0 +1,112 @@
+this  is  my  create component  tell m  how  am  to add  the  card  component
+
+import axios from "axios";
+import { useState } from "react";
+const Create = () => {
+  const [name, setname] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [Bprice, setBprice] = useState("");
+  const [Sprice, setSprice] = useState("");
+  const [error, setError] = useState("");
+  const [showSuccess, setShowSuccess] = useState(false);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    setError("");
+    if (!name) {
+      return setError("please provide product  name");
+    }
+    if (!quantity) {
+      return setError("please provide product  quantiy");
+    }
+    if (!Bprice) {
+      return setError("please provide product  buying price");
+    }
+    if (!Sprice) {
+      return setError("please provide product  selling price");
+    }
+
+    if (isNaN(quantity)) {
+      setError("Please provide a valid quantity");
+    }
+    if (isNaN(Bprice)) {
+      return setError("Please provide a  buying price");
+    }
+    if (isNaN(Sprice)) {
+      return setError("Please provide a valid selling price");
+    }
+    axios
+      .post("http://localhost:5000/createProduct", {
+        productName: name,
+        productQuantity: Number(quantity),
+        buyingPrice: Number(Bprice),
+        sellingPrice: Number(Sprice),
+      })
+      .then(() => {
+        setShowSuccess(true);
+        setTimeout(() => setShowSuccess(false), 3000);
+        setname("");
+        setQuantity("");
+        setBprice("");
+        setSprice("");
+        setError("");
+      })
+      .catch((err) => {
+        setError("Failed to create product");
+      });
+  };
+
+  return (
+    <>
+      <section>
+        <form onSubmit={handleSubmit}>
+          <div className="inputs">
+            <h1>Create product</h1>
+            {error && <div style={{ color: "red" }}>{error}</div>}
+            <input
+              type="text"
+              placeholder="product name"
+              value={name}
+              onChange={(e) => setname(e.target.value)}
+            />
+            <input
+              type="number"
+              placeholder="quantity purchased  in KG"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Buying price per KG"
+              value={Bprice}
+              onChange={(e) => setBprice(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Selling price per KG"
+              value={Sprice}
+              onChange={(e) => setSprice(e.target.value)}
+            />
+            <button type="submit">Create product</button>
+          </div>
+        </form>
+      </section>
+    </>
+  );
+};
+
+export default Create;
+ this  is  my  success card  how  do  i add this  
+ // components/SuccessCard.jsx
+import "./SuccessCard.css";
+
+const SuccessCard = ({ message, show }) => {
+  return (
+    <div className={`success-card ${show ? "show" : ""}`}>
+      <div className="tick">✔</div>
+      <p>{message || "Success!"}</p>
+    </div>
+  );
+};
+
+export default SuccessCard;
