@@ -32,6 +32,7 @@ const productSchema = new mongoose.Schema({
     required: true,
     unique: true, // Ensure product names are unique
   },
+  stock: [batchSchema],
 });
 
 const productModel = mongoose.model("products", productSchema);

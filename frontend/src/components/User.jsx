@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import "./User.css";
 
+import "./user.css";
 const User = () => {
   const [value, setValue] = useState("");
   const [products, setProducts] = useState([
@@ -16,10 +16,37 @@ const User = () => {
     }
   }, [products]);
 
-  const handleChange = (index, field, value) => {
+  const fetchSellingPrice = async (productName) => {
+    try {
+      const res = await fetch("http://localhost:5000/productprices", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productName }),
+      });
+
+      const data = await res.json();
+
+      if (data.pricePerKG) return parseFloat(data.pricePerKG);
+    } catch (error) {
+      console.error("could  not  fetch selling price ", error);
+    }
+  };
+
+  const handleChange = async (index, field, value) => {
     const updated = [...products];
     updated[index][field] = value;
     setProducts(updated);
+
+    const { name, quantity } = updated[index];
+
+    if ((field === "name" || field === "quantity") && name && quantity) {
+      const pricePerKG = await fetchSellingPrice(name);
+
+      if (pricePerKG !== null && !isNaN(quantity)) {
+        updated[index].price = (pricePerKG * parseFloat(quantity)).toFixed(2);
+        setProducts(updated);
+      }
+    }
   };
 
   const handleSubmit = async (e) => {
