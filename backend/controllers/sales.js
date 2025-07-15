@@ -94,6 +94,7 @@ export const getProductNames = async (req, res) => {
     res.status(500).json({ error: "Failed to fetch product names" });
   }
 };
+
 export const bulkSalesRecords = async (req, res) => {
   try {
     const rawSales = Array.isArray(req.body) ? req.body : [req.body];
@@ -158,6 +159,7 @@ export const bulkSalesRecords = async (req, res) => {
     res.status(500).json({ error: "Something went wrong" });
   }
 };
+
 export const getSalesPrices = async (req, res) => {
   const { productName } = req.body;
 

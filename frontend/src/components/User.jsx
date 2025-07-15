@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-
+import { debounce } from "../../../backend/utils/Debounce";
 import "./user.css";
 const User = () => {
+  const [productNames, setProductNames] = useState([]);
   const [value, setValue] = useState("");
   const [products, setProducts] = useState([
     { name: "", quantity: "", price: "" },
@@ -15,6 +16,13 @@ const User = () => {
       setProducts([...products, { name: "", quantity: "", price: "" }]);
     }
   }, [products]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/productNames")
+      .then((res) => res.json())
+      .then((data) => setProductNames(data))
+      .catch((err) => console.error("Failed to load product names", err));
+  }, []);
 
   const fetchSellingPrice = async (productName) => {
     try {
@@ -32,7 +40,18 @@ const User = () => {
     }
   };
 
-  const handleChange = async (index, field, value) => {
+  const debounceFetchedPrice = debounce(async (name, quantity, index) => {
+    const pricePerKG = await fetchSellingPrice(name);
+
+    if (pricePerKG !== null && !isNaN(quantity)) {
+      const rounded = Math.ceil((pricePerKG * quantity) / 5) * 5;
+      const updated = [...products];
+      updated[index].price = rounded.toFixed(2);
+      setProducts(updated);
+    }
+  }, 300);
+
+  const handleChange = (index, field, value) => {
     const updated = [...products];
     updated[index][field] = value;
     setProducts(updated);
@@ -40,12 +59,7 @@ const User = () => {
     const { name, quantity } = updated[index];
 
     if ((field === "name" || field === "quantity") && name && quantity) {
-      const pricePerKG = await fetchSellingPrice(name);
-
-      if (pricePerKG !== null && !isNaN(quantity)) {
-        updated[index].price = (pricePerKG * parseFloat(quantity)).toFixed(2);
-        setProducts(updated);
-      }
+      debounceFetchedPrice(name, parseFloat(quantity), index);
     }
   };
 
@@ -96,6 +110,7 @@ const User = () => {
               placeholder="Name"
               className="user-input"
               value={product.name}
+              list="product-suggestions"
               onChange={(e) => handleChange(index, "name", e.target.value)}
             />
             <input
@@ -119,6 +134,12 @@ const User = () => {
           Submit
         </button>
       </form>
+
+      <datalist id="product-suggestions">
+        {productNames.map((name, i) => (
+          <option key={i} value={name} />
+        ))}
+      </datalist>
     </div>
   );
 };
