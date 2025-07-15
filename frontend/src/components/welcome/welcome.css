@@ -1,0 +1,38 @@
+.welcome-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #20232a;
+  color: #f0f0f0;
+  height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.welcome-box {
+  text-align: center;
+  animation: fadeInUp 1s ease-out forwards;
+  opacity: 0;
+}
+
+.welcome-title {
+  font-size: 3rem;
+  color: #00cec9;
+  margin-bottom: 0.5rem;
+}
+
+.welcome-subtitle {
+  font-size: 1.2rem;
+  color: #cccccc;
+}
+
+/* Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

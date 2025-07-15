@@ -1,46 +1,55 @@
-.register-container {
+.login-section {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  padding: 2rem 1rem;
+  min-height: 100vh;
   background-color: #20232a;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #f0f0f0;
 }
 
-.register-form {
-  padding: 2rem;
+.login-form {
   background-color: #2c2f36;
+  padding: 2rem;
   border-radius: 12px;
-  width: 100%;
   max-width: 400px;
+  width: 100%;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
 }
 
-.register-form input {
+.login-title {
+  text-align: center;
+  font-size: 2rem;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.login-input {
   padding: 1rem;
   border-radius: 8px;
   border: 1px solid #444;
   background-color: #3a3d46;
   color: #f0f0f0;
   font-size: 1.05rem;
+  width: 100%;
   transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
-.register-form input::placeholder {
+.login-input::placeholder {
   color: #b0b0b0;
 }
 
-.register-form input:focus {
+.login-input:focus {
   border-color: #00cec9;
   background-color: #40424b;
   outline: none;
 }
 
-.register-form button {
+.login-button {
   padding: 1rem;
   background-color: #00cec9;
   color: #1e1f26;
@@ -52,35 +61,15 @@
   transition: background-color 0.3s ease;
 }
 
-.register-form button:hover {
+.login-button:hover {
   background-color: #00b3ae;
 }
 
-.error {
-  color: #ff6b6b;
-  font-weight: bold;
+.login-forgot {
   text-align: center;
-}
-
-.success {
-  color: #6bff9d;
-  font-weight: bold;
-  text-align: center;
-}
-
-.forgot-password {
-  text-align: center;
-  font-size: 0.9rem;
   color: #bbbbbb;
-  margin-top: -0.5rem;
-}
-
-.forgot-password a {
-  color: #bbbbbb;
-  text-decoration: underline;
+  font-size: 0.95rem;
   cursor: pointer;
-}
-
-.forgot-password a:hover {
-  color: #ffffff;
+  text-decoration: underline;
+  margin-top: -0.5rem;
 }
