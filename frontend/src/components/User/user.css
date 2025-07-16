@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 .user-main {
   display: flex;
   justify-content: center;
@@ -9,25 +14,26 @@
 }
 
 .user-form {
-  background: #2c2f36;
+  /* Match background to .user-main */
+  background: #20232a;
   padding: 2rem;
   border-radius: 12px;
   max-width: 800px;
   width: 100%;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  box-shadow: none; /* Disable for all screens now */
   position: relative;
 }
-
 .user-date {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  padding: 0.5rem;
-  font-size: 0.95rem;
-  background-color: #3a3d46;
-  color: #f0f0f0;
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  background-color: #2f313a;
+  color: #cccccc;
+  border-radius: 8px;
   border: 1px solid #444;
-  border-radius: 6px;
 }
 
 .user-title {
@@ -37,33 +43,30 @@
   color: #ffffff;
 }
 
-/* Row layout */
 .user-input-row {
   display: flex;
   gap: 1rem;
   margin-bottom: 1rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
-
 .user-input {
-  padding: 0.9rem 1rem;
-  border-radius: 8px;
-  border: 1px solid #444;
-  background-color: #3a3d46;
-  color: #f0f0f0;
+  padding: 0.7rem 0.2rem;
   font-size: 1rem;
-  flex: 1;
-  min-width: 140px;
-  transition: border-color 0.3s ease, background-color 0.3s ease;
+  background: transparent;
+  color: #f0f0f0;
+  border: none;
+  border-bottom: 1.5px solid #555;
+  flex: 1 1 30%;
+  min-width: 70px;
+  transition: border-color 0.3s ease;
 }
 
 .user-input::placeholder {
-  color: #b0b0b0;
+  color: #aaa;
 }
 
 .user-input:focus {
-  border-color: #00cec9;
-  background-color: #40424b;
+  border-bottom: 2px solid #00cec9;
   outline: none;
 }
 
@@ -82,4 +85,148 @@
 
 .user-submit:hover {
   background-color: #00b3ae;
+}
+
+/* === Hamburger & Dropdown Menu === */
+.user-header {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+  position: relative;
+}
+/* === Hamburger Menu & Slide-out Panel === */
+.hamburger {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #f0f0f0;
+  z-index: 1001;
+  cursor: pointer;
+}
+
+/* Slide-out menu */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 100%;
+  background-color: #2c2f36;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.4);
+  padding-top: 4rem;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.side-menu.open {
+  transform: translateX(0);
+}
+
+.side-menu button {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  background: none;
+  border: none;
+  color: #f0f0f0;
+  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.side-menu button:hover {
+  background-color: #3a3d46;
+}
+
+/* Drawer styles */
+.drawer-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 998;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 250px;
+  background-color: #2c2f36;
+  padding: 1rem;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: slideIn 0.3s ease forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+.drawer-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #f0f0f0;
+  align-self: flex-end;
+  cursor: pointer;
+}
+
+.drawer-options button {
+  background: none;
+  border: none;
+  color: #f0f0f0;
+  font-size: 1rem;
+  padding: 0.5rem 0;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+}
+
+.drawer-options button:hover {
+  background-color: #3a3d46;
+}
+
+/* Mobile improvements */
+@media (max-width: 400px) {
+  .user-input {
+    padding: 0.7rem 0.5rem;
+    font-size: 0.9rem;
+    flex: 1 1 30%;
+    min-width: 70px;
+  }
+
+  .user-form {
+    padding: 1.2rem;
+  }
+
+  .user-title {
+    font-size: 1.3rem;
+  }
+
+  .user-date {
+    font-size: 0.85rem;
+    padding: 0.4rem;
+  }
+}
+/* Remove shadow on small screens */
+@media (max-width: 480px) {
+  .user-form {
+    box-shadow: none;
+  }
 }

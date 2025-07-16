@@ -1,12 +1,15 @@
 // src/components/Register.jsx
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
+import "./register.css";
 const Register = () => {
   const [form, setForm] = useState({
     email: "",
     password: "",
     confirmPassword: "",
   });
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -31,16 +34,19 @@ const Register = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/createUser", {
+      const res = await fetch("http://localhost:5000/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email: form.email, password: form.password }),
       });
 
-      const data = await res.json();
+      const text = await res.text();
+      const data = JSON.parse(text);
+
       if (res.ok) {
         setSuccess("User registered successfully!");
         setForm({ email: "", password: "", confirmPassword: "" });
+        navigate("/login");
       } else {
         setError(data.error || "Failed to register user.");
       }

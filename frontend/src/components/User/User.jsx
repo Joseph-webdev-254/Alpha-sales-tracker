@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import { debounce } from "../../../backend/utils/Debounce";
+import { useNavigate } from "react-router-dom";
+import { debounce } from "../../utils/Debounce";
 import "./user.css";
+
 const User = () => {
   const [productNames, setProductNames] = useState([]);
   const [value, setValue] = useState("");
@@ -9,6 +11,17 @@ const User = () => {
     { name: "", quantity: "", price: "" },
     { name: "", quantity: "", price: "" },
   ]);
+
+  const [showMenu, setShowMenu] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const navigate = useNavigate();
+
+  const toggleMenu = () => setShowMenu(!showMenu);
+  const goToAdmin = () => {
+    navigate("/admin");
+    setShowMenu(false);
+  };
 
   useEffect(() => {
     const last = products[products.length - 1];
@@ -94,14 +107,45 @@ const User = () => {
 
   return (
     <div className="user-main">
+      <div className="user-header">
+        <button className="hamburger" onClick={() => setDrawerOpen(true)}>
+          ☰
+        </button>
+      </div>
+
+      {/* Drawer */}
+      {drawerOpen && (
+        <>
+          <div
+            className="drawer-backdrop"
+            onClick={() => setDrawerOpen(false)}
+          ></div>
+          <div className="drawer">
+            <button
+              className="drawer-close"
+              onClick={() => setDrawerOpen(false)}
+            >
+              ×
+            </button>
+            <div className="drawer-options">
+              <button
+                onClick={() => {
+                  navigate("/admin");
+                  setDrawerOpen(false);
+                }}
+              >
+                Admin
+              </button>
+
+              {/* Add more options here later */}
+            </div>
+          </div>
+        </>
+      )}
+
       <form className="user-form" onSubmit={handleSubmit}>
-        <input
-          type="date"
-          className="user-date"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
         <h2 className="user-title">Enter Products Sold</h2>
+        <p className="user-date">{new Date().toLocaleDateString()}</p>
 
         {products.map((product, index) => (
           <div key={index} className="user-input-row">
